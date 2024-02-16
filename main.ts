@@ -1,5 +1,5 @@
 function zeigeStatus () {
-    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, "" + car4.format(car4.motorAget(), 3, car4.eAlign.right) + car4.format(car4.servo_get(), 4, car4.eAlign.right) + " " + car4.spursensor_get() + " " + car4.format(car4.encoder_get(car4.eEncoderEinheit.Impulse), 5, car4.eAlign.right))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, "" + car4.format(car4.motorAget(), 3, car4.eAlign.right) + car4.format(car4.servo_get(), 4, car4.eAlign.right) + " " + car4.bin(car4.spursensor_get()) + " " + car4.format(car4.encoder_get(car4.eEncoderEinheit.Impulse), 5, car4.eAlign.right))
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 0, 7, lcd16x2rgb.lcd16x2_text("" + car4.format(car4.entfernung_cm(), 3, car4.eAlign.right) + car4.format(car4.helligkeit_analog(), 4, car4.eAlign.right)))
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 8, 15, lcd16x2rgb.lcd16x2_text(car4.wattmetertext()))
 }
@@ -9,7 +9,7 @@ radio.onReceivedBuffer(function (Datenpaket) {
         car4.comment("einmalig nach neu connected")
         car4.setConnected(true)
         car4.motorON(true)
-        car4.licht(!(car4.licht_get()))
+        car4.licht(!(car4.licht_get()), false)
     } else if (car4.isConnected()) {
         if (car4.receivedBuffer_Contains(car4.eBuffer.b1_Servo)) {
             car4.servo(car4.receivedBuffer_getUint8(car4.eBuffer.b1_Servo))
@@ -22,7 +22,7 @@ radio.onReceivedBuffer(function (Datenpaket) {
     }
 })
 control.onEvent(car4.encoder_EventSource(), EventBusValue.MICROBIT_EVT_ANY, function () {
-    basic.setLedColor(0x007fff)
+	
 })
 function Helligkeit () {
     if (car4.licht_get() && car4.helligkeit_vergleich(car4.eVergleich.gt, 300)) {
