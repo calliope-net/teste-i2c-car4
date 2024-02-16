@@ -3,9 +3,9 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "i2c-car4": "github:calliope-net/i2c-car4#v0.0.6",
         "lcd-16x2": "github:calliope-net/lcd-16x2#v2.0.5",
-        "radio": "*"
+        "radio": "*",
+        "i2c-car4": "github:calliope-net/i2c-car4#master"
     },
     "files": [
         "main.blocks",

@@ -1,5 +1,5 @@
 function zeigeStatus () {
-    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, "" + car4.format(car4.motorAget(), 3, car4.eAlign.right) + car4.format(car4.servo_get(), 4, car4.eAlign.right) + "" + car4.format(car4.encoder_get(car4.eEncoderEinheit.Impulse), 5, car4.eAlign.right))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, "" + car4.format(car4.motorAget(), 3, car4.eAlign.right) + car4.format(car4.servo_get(), 4, car4.eAlign.right) + " " + car4.hex([car4.spursensor_get()]) + " " + car4.format(car4.encoder_get(car4.eEncoderEinheit.Impulse), 5, car4.eAlign.right))
 }
 radio.onReceivedBuffer(function (Datenpaket) {
     car4.onReceivedBuffer(Datenpaket)
