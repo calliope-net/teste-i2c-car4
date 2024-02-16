@@ -1,5 +1,5 @@
 function zeigeStatus () {
-    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, "" + car4.format(car4.motorAget(), 3, car4.eAlign.right) + car4.format(car4.servo_get(), 4, car4.eAlign.right) + " " + car4.hex([car4.spursensor_get()]) + " " + car4.format(car4.encoder_get(car4.eEncoderEinheit.Impulse), 5, car4.eAlign.right))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, "" + car4.format(car4.motorAget(), 3, car4.eAlign.right) + car4.format(car4.servo_get(), 4, car4.eAlign.right) + " " + car4.spursensor_get() + " " + car4.format(car4.encoder_get(car4.eEncoderEinheit.Impulse), 5, car4.eAlign.right))
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 0, 7, lcd16x2rgb.lcd16x2_text("" + car4.format(car4.entfernung_cm(), 3, car4.eAlign.right) + car4.format(car4.helligkeit_analog(), 4, car4.eAlign.right)))
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 8, 15, lcd16x2rgb.lcd16x2_text(car4.wattmetertext()))
 }
@@ -42,7 +42,7 @@ loops.everyInterval(1000, function () {
         car4.comment("einmalig nach neu disconnected")
         car4.setConnected(false)
         car4.motorON(false)
-    } else if (false) {
+    } else if (!(car4.isConnected())) {
         car4.comment("dauerhaft wenn disconnected")
         car4.licht(true, true)
         zeigeStatus()
