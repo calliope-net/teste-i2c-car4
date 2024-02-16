@@ -18,19 +18,12 @@ radio.onReceivedBuffer(function (Datenpaket) {
             car4.motorA255(128)
         }
         zeigeStatus()
-        Helligkeit()
+        car4.licht_sensor(200, 300)
     }
 })
 control.onEvent(car4.encoder_EventSource(), EventBusValue.MICROBIT_EVT_ANY, function () {
 	
 })
-function Helligkeit () {
-    if (car4.licht_get() && car4.helligkeit_vergleich(car4.eVergleich.gt, 300)) {
-        car4.licht(false)
-    } else if (!(car4.licht_get()) && car4.helligkeit_vergleich(car4.eVergleich.lt, 200)) {
-        car4.licht(true)
-    }
-}
 car4.beimStart(240, 90)
 lcd16x2rgb.initLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E))
 lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, lcd16x2rgb.lcd16x2_text(car4.logText()))
@@ -47,6 +40,6 @@ loops.everyInterval(1000, function () {
         car4.licht(true, true)
         zeigeStatus()
     } else {
-        car4.comment("Bluetooth ist verbunden: 'wenn Zahl empfangen' ist aktiv")
+        car4.comment("Bluetooth ist verbunden: 'wenn Datenpaket empfangen' ist aktiv")
     }
 })
