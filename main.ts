@@ -12,11 +12,11 @@ radio.onReceivedBuffer(function (Datenpaket) {
         if (!(car4.isConnected())) {
             car4.comment("einmalig nach neu connected")
             car4.setConnected(true)
-            car4.motorON(true)
             car4.licht(false)
         } else if (car4.isConnected()) {
             if (car4.receivedBuffer_Contains(car4.eBuffer.b1_Servo)) {
                 car4.servo(car4.receivedBuffer_getUint8(car4.eBuffer.b1_Servo))
+                car4.motorON(car4.receivedBuffer_getBit(car4.eBit.x80_MotorPower))
                 car4.motorA255(car4.receivedBuffer_getUint8(car4.eBuffer.b0_Motor))
             } else {
                 car4.motorA255(128)
