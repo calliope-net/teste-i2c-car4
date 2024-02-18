@@ -3,6 +3,9 @@ function zeigeStatus () {
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 0, 7, lcd16x2rgb.lcd16x2_text(car4.statuszeile1(car4.eStatuszeile.b)))
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 8, 15, car4.statuszeile1(car4.eStatuszeile.c))
 }
+input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
+    car4.relay(false)
+})
 radio.onReceivedBuffer(function (Datenpaket) {
     if (car4.car4ready()) {
         car4.onReceivedBuffer(Datenpaket)
@@ -26,7 +29,7 @@ radio.onReceivedBuffer(function (Datenpaket) {
 control.onEvent(car4.encoder_EventSource(), EventBusValue.MICROBIT_EVT_ANY, function () {
 	
 })
-car4.beimStart(240, 96)
+car4.beimStart(240, 97)
 lcd16x2rgb.initLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E))
 lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, lcd16x2rgb.lcd16x2_text(car4.logText()))
 loops.everyInterval(1000, function () {
