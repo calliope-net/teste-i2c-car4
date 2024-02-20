@@ -1,6 +1,6 @@
 function zeigeStatus () {
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, lcd16x2rgb.lcd16x2_text(car4.statuszeile1(car4.eStatuszeile.a)))
-    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 0, 7, lcd16x2rgb.lcd16x2_text(car4.statuszeile1(car4.eStatuszeile.b)))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 0, 7, car4.statuszeile1(car4.eStatuszeile.buffer))
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 1, 8, 15, car4.statuszeile1(car4.eStatuszeile.c))
 }
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
@@ -16,9 +16,9 @@ radio.onReceivedBuffer(function (Datenpaket) {
         } else if (car4.isConnected()) {
             if (car4.receivedBuffer_Contains()) {
                 car4.servo(car4.receivedBuffer_getUint8(car4.eBufferOffset.b1_Servo))
-                car4.motorON(car4.receivedBuffer_getBit(car4.eBit.x80_MotorPower))
+                car4.motorON(car4.receivedBuffer_getBit(car4.eBufferBit.x80_MotorPower))
                 car4.motorA255(car4.receivedBuffer_getUint8(car4.eBufferOffset.b0_Motor))
-                car4.buzzer(car4.receivedBuffer_getBit(car4.eBit.x40_Hupe))
+                car4.buzzer(car4.receivedBuffer_getBit(car4.eBufferBit.x40_Hupe))
             } else {
                 car4.motorA255(128)
             }
