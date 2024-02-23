@@ -6,8 +6,19 @@ function zeigeStatus () {
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     car4.relay(false)
 })
-radio.onReceivedBuffer(function (Datenpaket) {
-    car4.onReceivedBuffer(Datenpaket)
+pins.onPulsed(DigitalPin.C16, PulseValue.High, function () {
+    if (input.runningTime() > t + 2000) {
+        t = input.runningTime()
+        car4.motorON(true)
+        car4.fahreSchritt(car4.programmSchritt(50, 105, 20))
+    } else {
+        z += 1
+    }
+})
+control.onEvent(car4.encoder_EventSource(), EventBusValue.MICROBIT_EVT_ANY, function () {
+    car4.motorA255(128)
+})
+car4.onReceivedData2(function () {
     if (car4.car4ready()) {
         if (!(car4.isConnected())) {
             car4.comment("einmalig nach neu connected")
@@ -27,19 +38,12 @@ radio.onReceivedBuffer(function (Datenpaket) {
         }
     }
 })
-pins.onPulsed(DigitalPin.C16, PulseValue.High, function () {
-    z += 1
-    car4.motorON(true)
-    car4.fahreSchritt(car4.programmSchritt(50, 105, 20))
-    z += 1
-})
-control.onEvent(car4.encoder_EventSource(), EventBusValue.MICROBIT_EVT_ANY, function () {
-	
-})
 let z = 0
+let t = 0
 car4.beimStart(240, 97)
 lcd16x2rgb.initLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E))
 lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, lcd16x2rgb.lcd16x2_text(car4.statuszeile1(car4.eStatuszeile.start)))
+t = input.runningTime()
 loops.everyInterval(1000, function () {
     if (car4.car4ready()) {
         if (car4.lastConnected(car4.car4_ePause(car4.ePause.p60))) {
@@ -48,7 +52,6 @@ loops.everyInterval(1000, function () {
             car4.comment("zwischen 1 Sekunde und 1 Minute ohne Bluetooth: Standby und blinken")
             car4.comment("einmalig nach neu disconnected")
             car4.setConnected(false)
-            car4.motorON(false)
         } else if (!(car4.isConnected())) {
             car4.comment("dauerhaft wenn disconnected")
             car4.licht(true, true)
