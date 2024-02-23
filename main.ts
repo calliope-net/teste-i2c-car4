@@ -6,23 +6,17 @@ function zeigeStatus () {
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     car4.relay(false)
 })
-pins.onPulsed(DigitalPin.C16, PulseValue.High, function () {
-    basic.setLedColor(0xff0000)
-})
-control.onEvent(car4.encoder_EventSource(), EventBusValue.MICROBIT_EVT_ANY, function () {
-    car4.motorA255(128)
-})
 pins.onPulsed(DigitalPin.C16, PulseValue.Low, function () {
     car4.comment("↑high, ↓low, Event niedrig bei l->h loslassen")
-    car4.comment("Zeit wie lange es low ↓↑ war")
+    car4.comment("Zeit wie lange es low ↓↑ war in µs")
     if (pins.pulseDuration() > 100000) {
         car4.motorON(true)
         car4.fahreSchritt(car4.programmSchritt(-81, 41, 30))
         z += 1
-    } else {
-    	
     }
-    basic.setLedColor(0xffffff)
+})
+car4.onEncoderStop(function (v) {
+    car4.motorA255(128)
 })
 car4.onReceivedData2(function () {
     if (car4.car4ready()) {
@@ -49,7 +43,6 @@ car4.beimStart(240, 97)
 lcd16x2rgb.initLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E))
 lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, lcd16x2rgb.lcd16x2_text(car4.statuszeile1(car4.eStatuszeile.start)))
 let t = input.runningTime()
-let list: number[] = []
 loops.everyInterval(1000, function () {
     if (car4.car4ready()) {
         if (car4.lastConnected(car4.car4_ePause(car4.ePause.p60))) {
