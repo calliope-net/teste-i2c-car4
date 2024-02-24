@@ -11,7 +11,7 @@ car4.onReceivedData(function (receivedBuffer) {
         zeigeStatus()
         car4.licht_sensor(200, 300)
     } else if (car4.receivedBuffer_getBit(car4.eBufferBit.fahrenStrecke)) {
-    	
+        car4.fahreBuffer19()
     }
 })
 function zeigeStatus () {
