@@ -1,14 +1,18 @@
 car4.onReceivedData(function (receivedBuffer) {
-    if (car4.receivedBuffer_Contains()) {
-        car4.servo(car4.receivedBuffer_getUint8(car4.eBufferOffset.b1_Servo))
-        car4.motorON(car4.receivedBuffer_getBit(car4.eBufferBit.x80_MotorPower))
-        car4.motorA255(car4.receivedBuffer_getUint8(car4.eBufferOffset.b0_Motor))
-        car4.buzzer(car4.receivedBuffer_getBit(car4.eBufferBit.x40_Hupe))
-    } else {
-        car4.motorA255(128)
+    if (car4.receivedBuffer_getBit(car4.eBufferBit.fahrenJostick)) {
+        if (car4.receivedBuffer_Contains()) {
+            car4.servo(car4.receivedBuffer_getUint8(car4.eBufferOffset.b1_Servo))
+            car4.motorON(car4.receivedBuffer_getBit(car4.eBufferBit.x80_MotorPower))
+            car4.motorA255(car4.receivedBuffer_getUint8(car4.eBufferOffset.b0_Motor))
+            car4.buzzer(car4.receivedBuffer_getBit(car4.eBufferBit.x40_Hupe))
+        } else {
+            car4.motorA255(128)
+        }
+        zeigeStatus()
+        car4.licht_sensor(200, 300)
+    } else if (car4.receivedBuffer_getBit(car4.eBufferBit.fahrenStrecke)) {
+    	
     }
-    zeigeStatus()
-    car4.licht_sensor(200, 300)
 })
 function zeigeStatus () {
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, lcd16x2rgb.lcd16x2_text(car4.statuszeile1(car4.eStatuszeile.a)))
