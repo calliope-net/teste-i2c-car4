@@ -34,21 +34,11 @@ let z = 0
 car4.beimStart(240, 97)
 lcd16x2rgb.initLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E))
 lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2_x3E), 0, 0, 15, lcd16x2rgb.lcd16x2_text(car4.statuszeile1(car4.eStatuszeile.start)))
-let t = input.runningTime()
 loops.everyInterval(1000, function () {
-    if (car4.car4ready()) {
-        if (car4.lastConnected(car4.car4_ePause(car4.ePause.p60))) {
-            car4.relay(false)
-        } else if (car4.isConnected() && car4.lastConnected(car4.car4_ePause(car4.ePause.p1))) {
-            car4.comment("zwischen 1 Sekunde und 1 Minute ohne Bluetooth: Standby und blinken")
-            car4.comment("einmalig nach neu disconnected")
-            car4.setConnected(false)
-        } else if (!(car4.isConnected())) {
-            car4.comment("dauerhaft wenn disconnected")
-            car4.licht(true, true)
-            zeigeStatus()
-        } else {
-            car4.comment("Bluetooth ist verbunden: 'wenn Datenpaket empfangen' ist aktiv")
-        }
+	
+})
+loops.everyInterval(500, function () {
+    if (car4.bluetooth_timeout()) {
+        zeigeStatus()
     }
 })
