@@ -34,7 +34,8 @@ pins.onPulsed(DigitalPin.C16, PulseValue.Low, function () {
     car4.comment("Zeit wie lange es low ↓↑ war in µs")
     if (pins.pulseDuration() > 100000) {
         car4.motorON(true)
-        car4.fahreSchritt(car4.programmSchritt(-60, 90, 30))
+        car4.fahreSchritt(car4.programmSchritt(50, 150, 250))
+        car4.fahreSchritt(car4.programmSchritt(-20, 30, 250))
         z += 1
     }
 })
